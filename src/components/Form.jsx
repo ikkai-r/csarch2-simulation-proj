@@ -28,8 +28,8 @@ const Form = () => {
                 <div className="mb-5 col-span-2">
                     <label className="block mb-2 text-sm font-medium text-neutral-100">{selectedOption == "B" ? "Binary Mantissa" : "Decimal"}</label>
                     <input 
-                           type="text" 
-                           id="base-input" 
+                           type="number" 
+                           id="mantissa-input" 
                            className="block w-full p-2.5 text-neutral-100 border border-neutral-200 rounded-lg bg-neutral-400 text-sm focus:ring-blue-500 focus:border-blue-500"
                            value={selectedOption == "B" ? binaryInput : ''}
                            onChange={selectedOption == "B" ? handleBinaryInputChange : null}
@@ -41,7 +41,7 @@ const Form = () => {
 
                 <div className="mb-5 col-span-2 md:col-span-1">
                     <label className="block mb-2 text-sm font-medium text-neutral-100">Base-{selectedOption == "B" ? "2" : "10"} Exponent</label>
-                    <input type="text" id="base-input" className="block w-full p-2.5 text-neutral-100 border border-neutral-200 rounded-lg bg-neutral-400 text-sm focus:ring-blue-500 focus:border-blue-500"/>
+                    <input type="number" id="base-input" className="block w-full p-2.5 text-neutral-100 border border-neutral-200 rounded-lg bg-neutral-400 text-sm focus:ring-blue-500 focus:border-blue-500"/>
                 </div>
 
                 
@@ -57,7 +57,7 @@ const Form = () => {
 
                 <div className="w-full mt-3">
                    <Button
-                    text="Convert"
+                    text="Convert" id="convert"
                    />
                 </div>
               
