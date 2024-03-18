@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 import Button from './Button';
+import { binaryValidationSchema } from '@/utils/validateBinary'
 
 const Form = () => {
     const [selectedOption, setSelectedOption] = useState("B"); 
+    const [binaryInput, setBinaryInput] = useState("");
+    const [binaryInputError, setBinaryInputError] = useState("");
 
     const handleDropdownChange = (event) => {
-      setSelectedOption(event.target.value);
+        setSelectedOption(event.target.value);
+    };
+
+    const handleBinaryInputChange = (event) => {
+        const inputValue = event.target.value;
+        setBinaryInput(inputValue);
+
+        binaryValidationSchema.isValid({ binaryInput }).then(valid => {
+            setBinaryInputError(valid ? "" : "Invalid input. Only binary digits (0, 1) and dot (.) are allowed.");
+        });
     };
 
     return (
@@ -15,7 +27,16 @@ const Form = () => {
              <div className="grid md:grid-cols-4 md:gap-5 items-center justify-center">
                 <div className="mb-5 col-span-2">
                     <label className="block mb-2 text-sm font-medium text-neutral-100">{selectedOption == "B" ? "Binary Mantissa" : "Decimal"}</label>
-                    <input type="text" id="base-input" className="block w-full p-2.5 text-neutral-100 border border-neutral-200 rounded-lg bg-neutral-400 text-sm focus:ring-blue-500 focus:border-blue-500"/>
+                    <input 
+                           type="text" 
+                           id="base-input" 
+                           className="block w-full p-2.5 text-neutral-100 border border-neutral-200 rounded-lg bg-neutral-400 text-sm focus:ring-blue-500 focus:border-blue-500"
+                           value={selectedOption == "B" ? binaryInput : ''}
+                           onChange={selectedOption == "B" ? handleBinaryInputChange : null}
+                    />
+
+                        {binaryInputError && <p className="text-red-500 text-sm mt-1">{binaryInputError}</p>}
+                    
                 </div>
 
                 <div className="mb-5 col-span-2 md:col-span-1">
