@@ -13,9 +13,11 @@ const Form = () => {
     };
 
     const handleInputChange = (event) => {
+        
         let inputValue = event.target.value;
+
         if (selectedOption === "B") {
-            let sanitizedInput = inputValue.replace(/[^0-1]/g, '').trim();
+            let sanitizedInput = inputValue.replace(/[^0-1.]/g, '').trim();
 
             const dotIndex = sanitizedInput.indexOf('.');
             if (dotIndex !== -1) {
@@ -23,7 +25,7 @@ const Form = () => {
             }
             console.log('here')
 
-            setNumb(inputValue);
+            setNumb(sanitizedInput);
         } else {
             setDec(inputValue);
         }
@@ -53,6 +55,7 @@ const Form = () => {
                                 onChange={handleInputChange}
                                 min="0"
                                 max="1"
+                                pattern="/[^0-1]/g"
                                 value={numb}
                                   />
                     :
