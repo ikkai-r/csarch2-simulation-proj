@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Button';
+import { convertDecimal64 } from '../utils/numberConverter.js';
 
 const Form = () => {
     const [selectedOption, setSelectedOption] = useState("B"); 
@@ -24,6 +25,7 @@ const Form = () => {
                 sanitizedInput = sanitizedInput.slice(0, dotIndex + 1) + sanitizedInput.slice(dotIndex + 1).replace('.', '');
             }
             console.log('here')
+            convertDecimal64(-82345678.90123456, 12)
 
             setNumb(sanitizedInput);
         } else {
@@ -88,7 +90,7 @@ const Form = () => {
                </div>
 
                 <div className="w-full mt-3">
-                   <Button
+                   <Button 
                     text="Convert" id="convert"
                    />
                 </div>
