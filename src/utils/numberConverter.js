@@ -130,7 +130,7 @@ function convertBCD(num) {
 
 function getCoeffConti(sig) {
     sig = String(sig);
-    //sig = sig.slice(1);
+    sig = sig.slice(1);
 
     while (sig.length < 15) {
         sig = '0' + sig;
