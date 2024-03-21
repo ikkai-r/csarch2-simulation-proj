@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Button';
-import { convertDecimal64 } from '../utils/numberConverter.js';
+import { convertBinarytoIEEE, convertDecimal64, getEPrime, getFractionalPart, getSignBit, normalizeBinaryMantissa } from '../utils/numberConverter.js';
 
 const Form = () => {
     const [selectedOption, setSelectedOption] = useState("B"); 
     const [numb, setNumb] = useState("");
     const [dec, setDec] = useState("");
     const [clearInput, setClearInput] = useState(false);
+    const [exponent, setExponent] = useState(0)
 
     const handleDropdownChange = (event) => {
         setSelectedOption(event.target.value);
         setClearInput(true); 
     };
+
+    const handleExponentChange = (event) => {
+        let inputValue = event.target.value;
+        setExponent(inputValue)
+    }
 
     const handleInputChange = (event) => {
         
@@ -32,6 +38,20 @@ const Form = () => {
             setDec(inputValue);
         }
     };
+
+    const handleConvertButton = () => {
+        let inputBorD = selectedOption
+        let inputMantissa = (inputBorD == "B" ? numb : dec)
+        let inputExponent = exponent
+
+        if (inputBorD === "B") {
+            let binaryConverted = convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent)
+            console.log("converted IEEE FP Representation: ")
+            console.log("   binary: " + binaryConverted.binary)
+            console.log("   hex: " + binaryConverted.hex)
+        }
+
+    }
 
     useEffect(() => {
         if (clearInput) {
@@ -75,7 +95,13 @@ const Form = () => {
 
                 <div className="mb-5 col-span-2 md:col-span-1">
                     <label className="block mb-2 text-sm font-medium text-neutral-100">Base-{selectedOption == "B" ? "2" : "10"} Exponent</label>
-                    <input type="number" id="base-input" className="block w-full p-2.5 text-neutral-100 border border-neutral-200 rounded-lg bg-neutral-400 text-sm focus:ring-blue-500 focus:border-blue-500"/>
+                    <input 
+                        type="number" 
+                        id="base-input" 
+                        className="block w-full p-2.5 text-neutral-100 border border-neutral-200 rounded-lg bg-neutral-400 text-sm focus:ring-blue-500 focus:border-blue-500"
+                        onChange={handleExponentChange}
+                        value={exponent}
+                    />
                 </div>
 
                 
@@ -91,7 +117,7 @@ const Form = () => {
 
                 <div className="w-full mt-3">
                    <Button 
-                    text="Convert" id="convert"
+                    text="Convert" id="convert" onClick={handleConvertButton}
                    />
                 </div>
               
