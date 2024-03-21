@@ -25,7 +25,7 @@ const Form = () => {
                 sanitizedInput = sanitizedInput.slice(0, dotIndex + 1) + sanitizedInput.slice(dotIndex + 1).replace('.', '');
             }
             console.log('here')
-            convertDecimal64(-82345678.90123456, 12)
+            convertDecimal64(-8765432345678100, -20) 
 
             setNumb(sanitizedInput);
         } else {
