@@ -1,4 +1,5 @@
 import BigNumber from "bignumber.js";
+import exp from "constants";
 
 export function decimalToBinary(decimal) {
     let integerPart = Math.floor(decimal);
@@ -28,6 +29,15 @@ export function normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
     let mantissa = new BigNumber(inputMantissa)
     let exponent = new BigNumber(inputExponent)
     let mantissaWholeNum = 0
+
+    if (mantissa == 0) { 
+        let normalized = {
+            mantissa: mantissa,
+            exponent: exponent
+        }
+
+        return normalized
+    }
 
     if (inputBorD === "B") {
         mantissaWholeNum = Math.trunc(mantissa)
@@ -65,8 +75,6 @@ export function normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
             mantissa = mantissa.dividedBy(10)
             exponent++;
         }
-
-        console.log("normalized binary mantissa: " + mantissa)
 
         mantissa = BigNumber(decimalToBinary(mantissa))
 
@@ -125,14 +133,62 @@ export function getFractionalPart(mantissa) {
     return justFractional
 }
 
+export function denormalizeMantissa(mantissa, exponent) {
+    mantissa = BigNumber(mantissa)
+    exponent = BigNumber(exponent)
+
+    while (exponent < -1022) {
+        mantissa = mantissa.dividedBy(10)
+        exponent++
+    }
+
+    let normalized = {
+        mantissa: mantissa,
+        exponent: exponent
+    }
+
+    console.log("denormalized mantissa: " + normalized.mantissa)
+    console.log("denormalized exponent: " + normalized.exponent)
+
+    return normalized
+}
+
 export function convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent) {
     let normalized = normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
     let signBit = getSignBit(normalized)
-    let exponentRepresentation = getEPrime(normalized.exponent)
-    let fractionalSignificand = getFractionalPart(normalized.mantissa)
+    let exponentRepresentation = ""
+    let fractionalSignificand = ""
+
+    if (normalized.mantissa == 0) { // zero
+        exponentRepresentation = "00000000000"
+
+        while(fractionalSignificand.length < 52) {
+            fractionalSignificand = fractionalSignificand + "0"
+        }
+    }
+
+    else if (normalized.exponent >= 1023) { // infinity
+        exponentRepresentation = "11111111111"
+
+        while(fractionalSignificand.length < 52) {
+            fractionalSignificand = fractionalSignificand + "0"
+        }
+    }
+
+    else if (normalized.exponent <= -1022) { // denormalized
+        exponentRepresentation = "00000000000"
+
+        normalized = denormalizeMantissa(normalized.mantissa, normalized.exponent)
+        fractionalSignificand = getFractionalPart(normalized.mantissa)
+    }
+
+    else {
+        exponentRepresentation = getEPrime(normalized.exponent)
+        fractionalSignificand = getFractionalPart(normalized.mantissa)
+    }
 
     let binary = String(String(signBit) + exponentRepresentation + fractionalSignificand)
-    let hex = parseInt(binary, 2).toString(16)
+    let hex = parseInt(binary, 2).toString(16).padStart(16, '0')
 
     let convertedBinaryFP = {
         binary: binary,
