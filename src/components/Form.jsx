@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Button';
-import { convertBinarytoIEEE, convertDecimal64, getEPrime, getFractionalPart, getSignBit, normalizeBinaryMantissa } from '../utils/numberConverter.js';
+import { convertBinarytoIEEE, getEPrime, getFractionalPart, getSignBit, normalizeBinaryMantissa } from '../utils/numberConverter.js';
 
 const Form = () => {
     const [selectedOption, setSelectedOption] = useState("B"); 
@@ -31,7 +31,6 @@ const Form = () => {
                 sanitizedInput = sanitizedInput.slice(0, dotIndex + 1) + sanitizedInput.slice(dotIndex + 1).replace('.', '');
             }
             console.log('here')
-            convertDecimal64(-8765432345678100, -20) 
 
             setNumb(sanitizedInput);
         } else {
@@ -49,6 +48,12 @@ const Form = () => {
             console.log("converted IEEE FP Representation: ")
             console.log("   binary: " + binaryConverted.binary)
             console.log("   hex: " + binaryConverted.hex)
+        }
+        else {
+            let decimalConverted = convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent)
+            console.log("converted IEEE FP Representation: ")
+            console.log("   binary: " + decimalConverted.binary)
+            console.log("   hex: " + decimalConverted.hex)
         }
 
     }
