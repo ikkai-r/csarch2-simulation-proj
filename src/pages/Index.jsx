@@ -116,7 +116,7 @@ const handleInputChange = (event) => {
             />
         </div>
 
-        <OutputSection convertedOutput={convertedOutput} />
+        <OutputSection convertedOutput={convertedOutput} selectedOption={selectedOption} numb={numb} dec={dec} exponent={exponent}/>
         
       </div>
     </main>
