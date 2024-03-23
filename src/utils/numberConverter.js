@@ -1,30 +1,6 @@
 import BigNumber from "bignumber.js";
 import exp from "constants";
 
-export function decimalToBinary(decimal) {
-    let integerPart = Math.floor(decimal);
-    let fractionalPart = decimal - integerPart;
-  
-    let binaryIntegerPart = integerPart.toString(2);
-  
-    let binaryFractionalPart = '';
-    while (fractionalPart > 0) {
-        if (binaryFractionalPart.length > 21) { 
-            break;
-        }
-        fractionalPart *= 2;
-        binaryFractionalPart += Math.floor(fractionalPart);
-        fractionalPart -= Math.floor(fractionalPart);
-    }
-  
-    let binary = binaryIntegerPart;
-    if (binaryFractionalPart !== '') {
-        binary += '.' + binaryFractionalPart;
-    }
-  
-    return binary;
-}
-
 export function normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent) {
     let mantissa = new BigNumber(inputMantissa)
     let exponent = new BigNumber(inputExponent)
@@ -79,7 +55,9 @@ export function normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
             exponent++;
         }
 
-        mantissa = BigNumber(decimalToBinary(mantissa))
+        mantissa = mantissa.toString(2)
+        console.log("did tostringwork: " + mantissa)
+        mantissa = BigNumber(mantissa)
 
         while (mantissa >= 10) {
             mantissa = mantissa.dividedBy(10)
@@ -181,6 +159,21 @@ function addSpaces(str) {
 }
 
 export function convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent) {
+    if (inputMantissa == "NaN") {
+
+        let mantissa = '0'.repeat(52);
+        mantissa = addSpaces(String(mantissa))
+
+        let convertedBinaryFP = [
+            "0",
+            "111 1111 1111",
+            mantissa,
+            "0000000000000000"
+        ]
+
+        return convertedBinaryFP
+    }
+
     let normalized = normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
     let signBit = getSignBit(normalized)
     let exponentRepresentation = ""
