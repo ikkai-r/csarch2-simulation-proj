@@ -31,9 +31,9 @@ const handleInputChange = (event) => {
     let inputValue = event.target.value;
 
     if (selectedOption === "B") {
-        let sanitizedInput = inputValue.replace(/[^0-1.\+-]/g, '').trim();
+        let sanitizedInput = inputValue.replace(/^(NaN|[0-1+\-.]*)$/g, '').trim();
 
-        let binaryValidation = /^(-|\+)?(0|1)+(\.(0|1)+)?$/g;
+        let binaryValidation = /^(NaN|[0-1+\-.]*)$/;
 
         switch (binaryValidation.test(sanitizedInput)){
             case (true):
@@ -54,7 +54,22 @@ const handleInputChange = (event) => {
 
         setNumb(sanitizedInput);
     } else {
-        setDec(inputValue);
+        let sanitizedInput = inputValue.replace(/^(NaN|[0-9+\-.]*)$/g, '').trim();
+
+        let binaryValidation = /^(NaN|[0-9+\-.]*)$/;
+
+        switch (binaryValidation.test(sanitizedInput)){
+            case (true):
+                console.log("valid: " + sanitizedInput);
+                break;
+            case (false):
+                console.log("invalid: " + sanitizedInput);
+                //disable convert button
+                break;
+
+        }
+
+        setDec(sanitizedInput);
     }
   };
 
