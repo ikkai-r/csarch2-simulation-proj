@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 import exp from "constants";
 
-BigNumber.set({ DECIMAL_PLACES: 15 });
+BigNumber.set({ DECIMAL_PLACES: 13 });
 BigNumber.set({ ROUNDING_MODE: BigNumber.ROUND_HALF_EVEN }); // rte
 
 export function decimalToBinary(decimal) {
