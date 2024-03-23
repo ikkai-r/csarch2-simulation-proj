@@ -1,7 +1,7 @@
 import { MdOutlineFileDownload } from "react-icons/md";
 import Button from "@/components/Button";
 
-export default function OutputSection() {
+export default function OutputSection({convertedOutput}) {
 
     return(
             <section id="OutputSection">
@@ -14,7 +14,8 @@ export default function OutputSection() {
                         </p>
                         <div className="bg-neutral-300 p-4 rounded-lg mt-2">
                             <p className="text-default">
-                                101010101010101001
+                                {/* 101010101010101001 */}
+                                {convertedOutput.binary}
                             </p>
                         </div>
                         <p className="text-sm md:text-default mt-5">
@@ -22,7 +23,8 @@ export default function OutputSection() {
                         </p>
                         <div className="bg-neutral-300 p-4 rounded-lg mt-2 mb-8">
                             <p className="text-default">
-                                ABABABABA
+                                {/* ABABABABA */}
+                                {convertedOutput.hex}
                             </p>
                         </div>
 

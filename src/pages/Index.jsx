@@ -3,9 +3,90 @@
 import Form from "@/components/Form";
 import Divider from "@/components/Divider";
 import OutputSection from "@/sections/OutputSection"
+import { useState, useEffect } from "react";
+
+import { convertBinarytoIEEE } from '../utils/numberConverter.js';
 
 
 export default function Index() {
+  const [selectedOption, setSelectedOption] = useState("B"); 
+  const [numb, setNumb] = useState("");
+  const [dec, setDec] = useState("");
+  const [clearInput, setClearInput] = useState(false);
+  const [exponent, setExponent] = useState(0)
+  const [convertedOutput, setConvertedOutput] = useState("")
+
+  const handleDropdownChange = (event) => {
+    setSelectedOption(event.target.value);
+    setClearInput(true); 
+};
+
+const handleExponentChange = (event) => {
+    let inputValue = event.target.value;
+    setExponent(inputValue)
+}
+
+const handleInputChange = (event) => {
+    
+    let inputValue = event.target.value;
+
+    if (selectedOption === "B") {
+        let sanitizedInput = inputValue.replace(/[^0-1.\+-]/g, '').trim();
+
+        let binaryValidation = /^(-|\+)?(0|1)+(\.(0|1)+)?$/g;
+
+        switch (binaryValidation.test(sanitizedInput)){
+            case (true):
+                console.log("valid: " + sanitizedInput);
+                break;
+            case (false):
+                console.log("invalid: " + sanitizedInput);
+                //disable convert button
+                break;
+
+        }
+
+        // const dotIndex = sanitizedInput.indexOf('.');
+        // if (dotIndex !== -1) {
+        //     sanitizedInput = sanitizedInput.slice(0, dotIndex + 1) + sanitizedInput.slice(dotIndex + 1).replace('.', '');
+        // }
+        // console.log('here')
+
+        setNumb(sanitizedInput);
+    } else {
+        setDec(inputValue);
+    }
+  };
+
+  const handleConvertButton = () => {
+      let inputBorD = selectedOption
+      let inputMantissa = (inputBorD == "B" ? numb : dec)
+      let inputExponent = exponent
+
+      if (inputBorD === "B") {
+          let binaryConverted = convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent)
+          setConvertedOutput(binaryConverted)
+          console.log("converted IEEE FP Representation: ")
+          console.log("   binary: " + binaryConverted.binary)
+          console.log("   hex: " + binaryConverted.hex)
+      }
+      else {
+          let decimalConverted = convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent)
+          setConvertedOutput(decimalConverted)
+          console.log("converted IEEE FP Representation: ")
+          console.log("   binary: " + decimalConverted.binary)
+          console.log("   hex: " + decimalConverted.hex)
+      }
+
+  }
+
+  useEffect(() => {
+      if (clearInput) {
+          setNumb(""); 
+          setDec("");
+          setClearInput(false);
+      }
+  }, [selectedOption]); 
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-5 md:p-24 bg-neutral-300">
@@ -19,10 +100,19 @@ export default function Index() {
        />
 
         <div className="w-full rounded-lg mt-12 flex justify-center">
-           <Form/>
+            <Form 
+                selectedOption={selectedOption}
+                numb={numb}
+                dec={dec}
+                exponent={exponent}
+                handleDropdownChange={handleDropdownChange}
+                handleExponentChange={handleExponentChange}
+                handleInputChange={handleInputChange}
+                handleConvertButton={handleConvertButton}
+            />
         </div>
 
-        <OutputSection/>
+        <OutputSection convertedOutput={convertedOutput} />
         
       </div>
     </main>

@@ -123,7 +123,8 @@ export function getEPrime (exponent) {
 export function getFractionalPart(mantissa) {
     let input = new BigNumber(mantissa)
     let fractional = input.modulo(1)
-    let justFractional = String(fractional).slice(2)
+    let digitsToSlice = (fractional < 0 ? 3 : 2)
+    let justFractional = String(fractional).slice(digitsToSlice)
     console.log("fractional part: " + justFractional)
 
     while(justFractional.length < 52) {
@@ -187,8 +188,8 @@ export function convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent) {
         fractionalSignificand = getFractionalPart(normalized.mantissa)
     }
 
-    let binary = String(String(signBit) + exponentRepresentation + fractionalSignificand)
-    let hex = parseInt(binary, 2).toString(16).padStart(16, '0')
+    let binary = String(String(signBit) + String(exponentRepresentation) + String(fractionalSignificand))
+    let hex = parseInt(binary, 2).toString(16).padStart(16, '0').toUpperCase()
 
     let convertedBinaryFP = {
         binary: binary,
