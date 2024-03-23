@@ -163,6 +163,23 @@ export function denormalizeMantissa(mantissa, exponent) {
     return normalized
 }
 
+function addSpaces(str) {
+    let result = '';
+    let count = 0;
+
+    for (let i = str.length - 1; i >= 0; i--) {
+        result = str[i] + result;
+        count++;
+
+        if (count === 4 && i !== 0) {
+            result = ' ' + result;
+            count = 0;
+        }
+    }
+
+    return result;
+}
+
 export function convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent) {
     let normalized = normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
     let signBit = getSignBit(normalized)
@@ -200,10 +217,17 @@ export function convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent) {
     let binary = String(String(signBit) + String(exponentRepresentation) + String(fractionalSignificand))
     let hex = parseInt(binary, 2).toString(16).padStart(16, '0').toUpperCase()
 
-    let convertedBinaryFP = {
-        binary: binary,
-        hex: hex
-    }
+    exponentRepresentation = addSpaces(String(exponentRepresentation))
+    fractionalSignificand = addSpaces(String(fractionalSignificand))
+
+    // binary = String(String(signBit) + ' ' + exponentRepresentation + ' ' + fractionalSignificand)
+
+    let convertedBinaryFP = [
+        String(signBit),
+        exponentRepresentation,
+        fractionalSignificand,
+        hex
+    ]
     
     return convertedBinaryFP
 }
