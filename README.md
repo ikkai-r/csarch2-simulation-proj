@@ -24,3 +24,39 @@ This web application provides a convenient tool for converting numbers between b
 ## Try It Out
 
 You can access the IEEE-754 Binary 64 Converter web application [here](https://csarch2-simulation-proj.vercel.app) and experiment with various inputs and special cases to see how it behaves.
+
+## Analysis
+
+### System Design
+
+The web application was made using Next.js deployed using Vercel, accessible at this [link](https://csarch2-simulation-proj.vercel.app). For the binary 64 conversion, the following steps showcase its implementation:
+
+1. The conversion function takes in the user-inputted mantissa, exponent, as well as whether the binary or decimal option was selected.
+2. It checks if the input is the special case NaN. If so, the function returns the corresponding value for NaN.
+3. The mantissa is then normalized to 1.f; Decimal inputs are first converted into their binary equivalent before normalization.
+4. The sign bit is obtained from the normalized mantissa.
+5. Remaining special cases are checked. Zero or infinity cases assign the corresponding special case values to the mantissa and exponent.
+6. A denormalized case denormalizes the mantissa to force the exponent to -1022. The exponent is then assigned the special case value.
+7. If the inputted mantissa and exponent do not match any of the special cases, e’ as well as the fractional portion are derived from the input.
+8. Zeroes are padded as necessary to ensure the final binary output is the correct length.
+
+### Input Validation
+
+- Initially, input field properties were modified to accept only numeric values, which did not account for binary inputs or symbols like "-", "+", and "." in decimal inputs.
+- Validation was done by trimming out invalid symbols initially, but this approach didn't handle symbols placed in different locations and multiple times.
+- Regular expressions (regex) were implemented to validate both binary and decimal input fields on change of the input field, enabling the button if the input is valid based on the regex.
+
+### Handling Special Cases
+
+- Initial challenge encountered due to uncertainty about implementing NaN.
+- Considered allowing users to input an "i" to represent the imaginary number as NaN.
+- Added NaN as an explicit option for users to input.
+- Updated regex to include NaN as a valid input, ensuring the system recognizes it appropriately.
+
+### Bugs in Backend Logic
+
+- Tasks were distributed among team members for the implementation of binary floating-point conversion.
+- Small hurdles were encountered during implementation, including:
+  - Ensuring correct number of bits for exponent and fractional representation after conversion.
+  - Initial decimal input conversion to binary before performing floating-point conversion.
+  - Priority of special case recognition and handling.
