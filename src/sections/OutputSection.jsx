@@ -1,5 +1,6 @@
 import { MdOutlineFileDownload } from "react-icons/md";
 import Button from "@/components/Button";
+import Table from '@/components/Table'
 
 export default function OutputSection({convertedOutput}) {
 
@@ -14,7 +15,7 @@ export default function OutputSection({convertedOutput}) {
                         </p>
                         <div className="bg-neutral-300 p-4 rounded-lg mt-2">
                             <p className="text-default">
-                                {/* 101010101010101001 */}
+                                <Table/>
                                 {convertedOutput.binary}
                             </p>
                         </div>
