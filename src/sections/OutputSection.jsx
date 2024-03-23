@@ -14,8 +14,9 @@ export default function OutputSection({convertedOutput}) {
                             Binary Representation
                         </p>
                         <div className="bg-neutral-300 p-4 rounded-lg mt-2">
+                        <Table/>
+
                             <p className="text-default">
-                                <Table/>
                                 {convertedOutput.binary}
                             </p>
                         </div>
