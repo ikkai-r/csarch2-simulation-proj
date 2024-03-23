@@ -24,13 +24,26 @@ const Form = () => {
         let inputValue = event.target.value;
 
         if (selectedOption === "B") {
-            let sanitizedInput = inputValue.replace(/[^0-1.]/g, '').trim();
+            let sanitizedInput = inputValue.replace(/[^0-1.\+-]/g, '').trim();
 
-            const dotIndex = sanitizedInput.indexOf('.');
-            if (dotIndex !== -1) {
-                sanitizedInput = sanitizedInput.slice(0, dotIndex + 1) + sanitizedInput.slice(dotIndex + 1).replace('.', '');
+            let binaryValidation = /^(-|\+)?(0|1)+(\.(0|1)+)?$/g;
+
+            switch (binaryValidation.test(sanitizedInput)){
+                case (true):
+                    console.log("valid: " + sanitizedInput);
+                    break;
+                case (false):
+                    console.log("invalid: " + sanitizedInput);
+                    //disable convert button
+                    break;
+
             }
-            console.log('here')
+
+            // const dotIndex = sanitizedInput.indexOf('.');
+            // if (dotIndex !== -1) {
+            //     sanitizedInput = sanitizedInput.slice(0, dotIndex + 1) + sanitizedInput.slice(dotIndex + 1).replace('.', '');
+            // }
+            // console.log('here')
 
             setNumb(sanitizedInput);
         } else {
@@ -76,13 +89,13 @@ const Form = () => {
 
                     { selectedOption === "B" ? 
                          <input 
-                                type="number" 
+                                type="text" 
                                 id="mantissa-input" 
                                 className="block w-full p-2.5 text-neutral-100 border border-neutral-200 rounded-lg bg-neutral-400 text-sm focus:ring-blue-500 focus:border-blue-500"
                                 onChange={handleInputChange}
                                 min="0"
                                 max="1"
-                                pattern="/[^0-1]/g"
+                                pattern="/^(-|\+)?(0|1)+(\.(0|1)+)?$/g"
                                 value={numb}
                                   />
                     :
