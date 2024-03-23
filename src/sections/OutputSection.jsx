@@ -26,7 +26,7 @@ export default function OutputSection({convertedOutput}) {
                         <div className="bg-neutral-300 p-4 rounded-lg mt-2 mb-8">
                             <p className="text-default">
                                 {/* ABABABABA */}
-                                {convertedOutput[3]}
+                                {'0x' + convertedOutput[3]}
                             </p>
                         </div>
 
