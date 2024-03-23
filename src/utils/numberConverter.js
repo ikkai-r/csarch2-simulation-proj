@@ -173,7 +173,7 @@ export function convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent) {
             "0",
             "111 1111 1111",
             mantissa,
-            "0000000000000000"
+            "7FF0000000000000"
         ]
 
         return convertedBinaryFP
