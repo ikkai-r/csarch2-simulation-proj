@@ -1,9 +1,6 @@
 import BigNumber from "bignumber.js";
 import exp from "constants";
 
-BigNumber.set({ DECIMAL_PLACES: 13 });
-BigNumber.set({ ROUNDING_MODE: BigNumber.ROUND_HALF_EVEN }); // rte
-
 export function decimalToBinary(decimal) {
     let integerPart = Math.floor(decimal);
     let fractionalPart = decimal - integerPart;
@@ -61,6 +58,9 @@ export function normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
             exponent: exponent
         }
 
+        normalized.mantissa = normalized.mantissa.toFixed(52, 6)
+        normalized.mantissa = BigNumber(normalized.mantissa)
+
         console.log("normalized mantissa: " + normalized.mantissa)
         console.log("exponent: " + normalized.exponent)
 
@@ -95,6 +95,9 @@ export function normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
             mantissa: mantissa,
             exponent: exponent
         }
+
+        normalized.mantissa = normalized.mantissa.toFixed(52, 6)
+        normalized.mantissa = BigNumber(normalized.mantissa)
 
         console.log("normalized binary mantissa: " + normalized.mantissa)
         console.log("exponent: " + normalized.exponent)
@@ -150,6 +153,9 @@ export function denormalizeMantissa(mantissa, exponent) {
         mantissa: mantissa,
         exponent: exponent
     }
+
+    normalized.mantissa = normalized.mantissa.toFixed(52, 6)
+    normalized.mantissa = BigNumber(normalized.mantissa)
 
     console.log("denormalized mantissa: " + normalized.mantissa)
     console.log("denormalized exponent: " + normalized.exponent)
