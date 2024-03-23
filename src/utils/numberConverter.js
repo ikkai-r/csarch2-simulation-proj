@@ -192,7 +192,7 @@ export function convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent) {
         }
     }
 
-    else if (normalized.exponent >= 1023) { // infinity
+    else if (normalized.exponent > 1023) { // infinity
         exponentRepresentation = "11111111111"
 
         while(fractionalSignificand.length < 52) {
@@ -200,7 +200,7 @@ export function convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent) {
         }
     }
 
-    else if (normalized.exponent <= -1022) { // denormalized
+    else if (normalized.exponent < -1022) { // denormalized
         exponentRepresentation = "00000000000"
 
         normalized = denormalizeMantissa(normalized.mantissa, normalized.exponent)
