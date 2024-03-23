@@ -70,15 +70,15 @@ const handleInputChange = (event) => {
           let binaryConverted = convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent)
           setConvertedOutput(binaryConverted)
           console.log("converted IEEE FP Representation: ")
-          console.log("   binary: " + binaryConverted.binary)
-          console.log("   hex: " + binaryConverted.hex)
+          console.log("   binary: " + binaryConverted[0] + binaryConverted[1] + binaryConverted[2])
+          console.log("   hex: " + binaryConverted[3])
       }
       else {
           let decimalConverted = convertBinarytoIEEE (inputBorD, inputMantissa, inputExponent)
           setConvertedOutput(decimalConverted)
           console.log("converted IEEE FP Representation: ")
-          console.log("   binary: " + decimalConverted.binary)
-          console.log("   hex: " + decimalConverted.hex)
+          console.log("   binary: " + decimalConverted[0] + decimalConverted[1] + decimalConverted[2])
+          console.log("   hex: " + decimalConverted[3])
       }
 
   }

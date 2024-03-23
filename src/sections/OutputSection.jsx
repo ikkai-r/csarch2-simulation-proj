@@ -37,7 +37,7 @@ export default function OutputSection({convertedOutput, selectedOption, dec, num
                         <Table/>
 
                             <p className="text-default">
-                                {convertedOutput.binary}
+                                {convertedOutput[0] + ' ' + convertedOutput[1] + ' ' + convertedOutput[2]}
                             </p>
                         </div>
                         <p className="text-sm md:text-default mt-5">
@@ -46,7 +46,7 @@ export default function OutputSection({convertedOutput, selectedOption, dec, num
                         <div className="bg-neutral-300 p-4 rounded-lg mt-2 mb-8">
                             <p className="text-default">
                                 {/* ABABABABA */}
-                                {convertedOutput.hex}
+                                {'0x' + convertedOutput[3]}
                             </p>
                         </div>
 
