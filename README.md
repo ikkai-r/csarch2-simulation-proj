@@ -60,3 +60,6 @@ The web application was made using Next.js deployed using Vercel, accessible at 
   - Ensuring correct number of bits for exponent and fractional representation after conversion.
   - Initial decimal input conversion to binary before performing floating-point conversion.
   - Priority of special case recognition and handling.
+ 
+## Test Cases
+Screenshot of test cases can be seen at the directory: src/test
