@@ -1,6 +1,8 @@
 import BigNumber from "bignumber.js";
 import exp from "constants";
 
+BigNumber.config({ DECIMAL_PLACES: 1300 })
+
 export function normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent) {
     let mantissa = new BigNumber(inputMantissa)
     let exponent = new BigNumber(inputExponent)
@@ -51,13 +53,19 @@ export function normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
         }
     
         while (exponent < 0) {
+            console.log(String(mantissa))
             mantissa = mantissa.dividedBy(10)
             exponent++;
         }
 
         mantissa = mantissa.toString(2)
-        console.log(mantissa)
+
+        console.log(String(mantissa))
+
         mantissa = BigNumber(mantissa)
+
+        // console.log('before ' + mantissa)
+        // console.log('before ' + exponent)
 
         mantissaWholeNum = Math.trunc(mantissa)
         while (!(mantissaWholeNum == 1 || mantissaWholeNum == -1)) {
@@ -72,7 +80,7 @@ export function normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
             }
         }
 
-        console.log(String(mantissa))
+        //console.log(String(mantissa))
 
         let normalized = {
             mantissa: mantissa,
@@ -128,6 +136,7 @@ export function denormalizeMantissa(mantissa, exponent) {
     exponent = BigNumber(exponent)
 
     while (exponent < -1022) {
+        console.log('here')
         mantissa = mantissa.dividedBy(10)
         exponent++
     }
