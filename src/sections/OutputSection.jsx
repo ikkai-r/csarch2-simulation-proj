@@ -8,9 +8,10 @@ export default function OutputSection({convertedOutput, selectedOption, dec, num
 
         const choice = selectedOption === "B" ? 'Choice: Binary Floating Point\n' : 'Choice: Decimal Floating Point\n'
         const input = selectedOption === "B" ? `Input: ${numb} x 2^${exponent}\n`  : `Input: ${dec} x 10^${exponent}\n`;
-        const spaceBOutput =  convertedOutput.binary[0] + " " + convertedOutput.binary.substring(1, 8) + " " + convertedOutput.binary.substring(9);
+
+        const spaceBOutput =  convertedOutput[0] + " " + convertedOutput[1].replace(/\s/g, "") + " " + convertedOutput[2].replace(/\s/g, "");
         const bOutput = `Binary Output: ${spaceBOutput}\n`
-        const hOutput = 'Hexadecimal Equivalent: ' +  '0x' + `${convertedOutput.hex}\n`
+        const hOutput = 'Hexadecimal Equivalent: ' +  '0x' + `${convertedOutput[3]}\n`;
 
         const textData = header + choice + input + bOutput + hOutput;
 
