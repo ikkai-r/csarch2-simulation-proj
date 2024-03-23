@@ -9,7 +9,7 @@ export function decimalToBinary(decimal) {
   
     let binaryFractionalPart = '';
     while (fractionalPart > 0) {
-        if (binaryFractionalPart.length > 21) { // Limit fractional part for demonstration
+        if (binaryFractionalPart.length > 21) { 
             break;
         }
         fractionalPart *= 2;
@@ -101,7 +101,7 @@ export function normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
 }
 
 export function getSignBit (normalized) {
-    if (normalized.mantissa < 0) {
+    if (normalized.mantissa < 0 || normalized.mantissa.isNegative() == true) {
         return 1
     } else {
         return 0
