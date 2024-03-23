@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Button';
 
-const Form = ({selectedOption, numb, dec, exponent, handleDropdownChange, handleExponentChange, handleInputChange, handleConvertButton}) => {
+const Form = ({selectedOption, numb, dec, exponent, handleDropdownChange, handleExponentChange, handleInputChange, handleConvertButton, isValidInput}) => {
     return (
         <section>
 
@@ -18,7 +18,6 @@ const Form = ({selectedOption, numb, dec, exponent, handleDropdownChange, handle
                                 onChange={handleInputChange}
                                 min="0"
                                 max="1"
-                                pattern="/^(NaN|[0-1+\-.]*)$/g"
                                 value={numb}
                                   />
                     :
@@ -27,15 +26,12 @@ const Form = ({selectedOption, numb, dec, exponent, handleDropdownChange, handle
                                 id="mantissa-input" 
                                 className="block w-full p-2.5 text-neutral-100 border border-neutral-200 rounded-lg bg-neutral-400 text-sm focus:ring-blue-500 focus:border-blue-500"
                                 onChange={handleInputChange}
-                                min="0"
-                                max="9"
-                                pattern="/^(NaN|[0-9+\-.]*)$/g"
                                 value={dec}
                             />
                     }
                     
-                    
-                </div>
+                {!isValidInput && (selectedOption === "B" ? numb : dec) && <p className="text-red-500 text-sm">Invalid input. Please enter valid values.</p>}
+                    </div>
 
                 <div className="mb-5 col-span-2 md:col-span-1">
                     <label className="block mb-2 text-sm font-medium text-neutral-100">Base-{selectedOption == "B" ? "2" : "10"} Exponent</label>
@@ -61,7 +57,9 @@ const Form = ({selectedOption, numb, dec, exponent, handleDropdownChange, handle
 
                 <div className="w-full mt-3">
                    <Button 
-                    text="Convert" id="convert" onClick={handleConvertButton}
+                    text="Convert" id="convert" 
+                    onClick={handleConvertButton}
+                    disabled={!isValidInput}
                    />
                 </div>
               

@@ -15,6 +15,7 @@ export default function Index() {
   const [clearInput, setClearInput] = useState(false);
   const [exponent, setExponent] = useState(0)
   const [convertedOutput, setConvertedOutput] = useState("")
+  const [isValidInput, setIsValidInput] = useState(false);
 
   const handleDropdownChange = (event) => {
     setSelectedOption(event.target.value);
@@ -30,46 +31,33 @@ const handleInputChange = (event) => {
     
     let inputValue = event.target.value;
 
+    setIsValidInput(false);
+
     if (selectedOption === "B") {
-        let sanitizedInput = inputValue.replace(/^(NaN|[0-1+\-.]*)$/g, '').trim();
-
-        let binaryValidation = /^(NaN|[0-1+\-.]*)$/;
-
-        switch (binaryValidation.test(sanitizedInput)){
-            case (true):
-                console.log("valid: " + sanitizedInput);
-                break;
-            case (false):
-                console.log("invalid: " + sanitizedInput);
-                //disable convert button
-                break;
-
+        let binaryValidation = /^(NaN|[-+]?[01]+\.?[01]*)$/;
+        if (binaryValidation.test(inputValue)) {
+            console.log("valid: " + inputValue);
+            setIsValidInput(true);
+        } else {
+            console.log("invalid: " + inputValue);
+            setIsValidInput(false); 
         }
 
-        // const dotIndex = sanitizedInput.indexOf('.');
-        // if (dotIndex !== -1) {
-        //     sanitizedInput = sanitizedInput.slice(0, dotIndex + 1) + sanitizedInput.slice(dotIndex + 1).replace('.', '');
-        // }
-        // console.log('here')
+        setNumb(inputValue);
 
-        setNumb(sanitizedInput);
     } else {
-        let sanitizedInput = inputValue.replace(/^(NaN|[0-9+\-.]*)$/g, '').trim();
+        let decValidation = /^(NaN|[-+]?[0-9]+\.?[0-9]*)$/;
 
-        let binaryValidation = /^(NaN|[0-9+\-.]*)$/;
-
-        switch (binaryValidation.test(sanitizedInput)){
-            case (true):
-                console.log("valid: " + sanitizedInput);
-                break;
-            case (false):
-                console.log("invalid: " + sanitizedInput);
-                //disable convert button
-                break;
-
+        if (decValidation.test(inputValue)) {
+            console.log("valid: " + inputValue);
+            setIsValidInput(true);
+        } else {
+            console.log("invalid: " + inputValue);
+            setIsValidInput(false); 
         }
 
-        setDec(sanitizedInput);
+        setDec(inputValue);
+
     }
   };
 
@@ -124,6 +112,7 @@ const handleInputChange = (event) => {
                 handleExponentChange={handleExponentChange}
                 handleInputChange={handleInputChange}
                 handleConvertButton={handleConvertButton}
+                isValidInput={isValidInput}
             />
         </div>
 
