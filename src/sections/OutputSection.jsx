@@ -34,10 +34,13 @@ export default function OutputSection({convertedOutput, selectedOption, dec, num
                             Binary Representation
                         </p>
                         <div className="bg-neutral-300 p-4 rounded-lg mt-2">
-                        <Table/>
+                        <Table
+                        sign={convertedOutput[0]}
+                        frac={convertedOutput[2]}
+                        exp={convertedOutput[1]}/>
 
                             <p className="text-default">
-                                {convertedOutput[0] + ' ' + convertedOutput[1] + ' ' + convertedOutput[2]}
+                                
                             </p>
                         </div>
                         <p className="text-sm md:text-default mt-5">
@@ -45,8 +48,7 @@ export default function OutputSection({convertedOutput, selectedOption, dec, num
                         </p>
                         <div className="bg-neutral-300 p-4 rounded-lg mt-2 mb-8">
                             <p className="text-default">
-                                {/* ABABABABA */}
-                                {'0x' + convertedOutput[3]}
+                                {convertedOutput[3] === null || convertedOutput[3] === undefined ? '' : '0x' + convertedOutput[3]}
                             </p>
                         </div>
 
