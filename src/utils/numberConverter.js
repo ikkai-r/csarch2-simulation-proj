@@ -56,18 +56,23 @@ export function normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
         }
 
         mantissa = mantissa.toString(2)
-        console.log("did tostringwork: " + mantissa)
+        console.log(mantissa)
         mantissa = BigNumber(mantissa)
 
-        while (mantissa >= 10) {
-            mantissa = mantissa.dividedBy(10)
-            exponent++
+        mantissaWholeNum = Math.trunc(mantissa)
+        while (!(mantissaWholeNum == 1 || mantissaWholeNum == -1)) {
+            if (mantissaWholeNum >= 10 || mantissaWholeNum <= -10) {
+                mantissa = mantissa.dividedBy(10)
+                exponent++
+                mantissaWholeNum = Math.trunc(mantissa)
+            } else if (mantissaWholeNum == 0) {
+                mantissa = mantissa.multipliedBy(10)
+                exponent--
+                mantissaWholeNum = Math.trunc(mantissa)
+            }
         }
 
-        while (mantissa < 1) {
-            mantissa = mantissa.multipliedBy(10)
-            exponent--
-        }
+        console.log(String(mantissa))
 
         let normalized = {
             mantissa: mantissa,
@@ -77,7 +82,7 @@ export function normalizeBinaryMantissa(inputBorD, inputMantissa, inputExponent)
         normalized.mantissa = normalized.mantissa.toFixed(52, 6)
         normalized.mantissa = BigNumber(normalized.mantissa)
 
-        console.log("normalized binary mantissa: " + normalized.mantissa)
+        console.log("normalized mantissa: " + normalized.mantissa)
         console.log("exponent: " + normalized.exponent)
 
         return normalized
